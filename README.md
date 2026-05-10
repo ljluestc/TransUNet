@@ -39,6 +39,22 @@ All data are available so no need to send emails for data. Please use the [BTCV 
 
 Please prepare an environment with python=3.7, and then use the command "pip install -r requirements.txt" for the dependencies.
 
+#### Troubleshooting (Windows)
+
+If you hit an error like:
+
+`ImportError: DLL load failed while importing _imaging`
+
+this usually indicates a broken/incompatible Pillow or torchvision installation in the current Python environment.
+Try reinstalling compatible packages in a clean environment:
+
+```bash
+pip uninstall -y pillow torchvision
+pip install --no-cache-dir pillow torchvision
+```
+
+TransUNet now has an internal Compose fallback in training, so `train.py` no longer hard-fails at startup just because `torchvision` import fails in this path.
+
 ### 4. Train/Test
 
 - Run the train script on synapse dataset. The batch size can be reduced to 12 or 6 to save memory (please also decrease the base_lr linearly), and both can reach similar performance.
